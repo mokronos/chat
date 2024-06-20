@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Chat</h1>
+    <p>Welcome to the home page!</p>
+    <a href="{{ url_for('index') }}">Home</a>
+
+    <h2>Messages</h2>
+    <ul id="chat">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <form hx-post="{{ url_for('chat') }}" hx-target="#chat" hx-swap="outerHTML">
+        <input type="text" id="message" name="message" placeholder="Type a message">
+    </form>
+
+    <button hx-delete="{{ url_for('chat') }}" hx-target="#chat" hx-swap="outerHTML">Clear</button>
+
+{% endblock %}
