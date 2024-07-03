@@ -8,12 +8,13 @@
     <h2>Messages</h2>
     <ul id="chat">
         {% for message in messages %}
-            <li>{{ message }}</li>
+            <li>{{message.role}}: {{ message.content }}</li>
         {% endfor %}
     </ul>
     <form hx-post="{{ url_for('chat') }}" hx-target="#chat" hx-swap="outerHTML">
         <input type="text" id="message" name="message" placeholder="Type a message">
     </form>
+    <div hx-get="{{ url_for('model_response') }}" hx-trigger="getModelResponse from:body" hx-target="#chat" hx-swap="outerHTML"></div>
 
     <button hx-delete="{{ url_for('chat') }}" hx-target="#chat" hx-swap="outerHTML">Clear</button>
 
