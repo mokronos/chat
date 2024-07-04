@@ -1,9 +1,12 @@
 import flask
 from flask import render_template, make_response
+from flask_sse import sse
 import requests
 import time
 
 app = flask.Flask(__name__)
+app.config["REDIS_URL"] = "redis://localhost"
+
 
 @app.route('/')
 def index():
@@ -50,9 +53,12 @@ def model_response():
 @app.route('/chat_sse', methods=['GET'])
 def chat_sse():
     print("SSE")
-    t = time.time()
-    # return sse response
-    return render_template('chat/mess.html', messages=messages, time=t)
+    for _ in range(10):
+        t = time.time()
+        sse.publish({"message": f"Hello at {t}"}, type='greeting')
+        time.sleep(1)
+
+    return "done"
 
 
 # def call_model(model: str="llama3:8b") -> str:

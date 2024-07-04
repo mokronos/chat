@@ -18,4 +18,9 @@
 
     <button hx-delete="{{ url_for('chat') }}" hx-target="#chat" hx-swap="innerHTML">Clear</button>
 
+    <div hx-ext="sse" sse-connect="{{ url_for('chat_sse') }}" sse-swap="greeting">
+        Hello, world!
+    </div>
+
+
 {% endblock %}
