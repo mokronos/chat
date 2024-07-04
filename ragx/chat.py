@@ -1,6 +1,7 @@
 import flask
 from flask import render_template, make_response
 import requests
+import time
 
 app = flask.Flask(__name__)
 
@@ -42,13 +43,22 @@ def model_response():
     match flask.request.method:
         case 'GET':
             call_model()
-            return render_template('chat/mess.html', messages=messages)
+            return "data: test"
         case _:
             return render_template('chat/chat.html', messages=messages)
 
-def call_model(model: str="llama3:8b") -> str:
+@app.route('/chat_sse', methods=['GET'])
+def chat_sse():
+    print("SSE")
+    t = time.time()
+    # return sse response
+    return render_template('chat/mess.html', messages=messages, time=t)
 
-    if model=="llama3:8b":
+
+# def call_model(model: str="llama3:8b") -> str:
+def call_model(model: str="phi3") -> str:
+
+    if model in ["phi3", "llama3:8b"]:
 
         url = "http://localhost:11434/api/chat"
 

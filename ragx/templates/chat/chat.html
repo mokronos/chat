@@ -6,16 +6,16 @@
     <a href="{{ url_for('index') }}">Home</a>
 
     <h2>Messages</h2>
-    <ul id="chat">
+    <ul id="chat" hx-ext="sse" sse-connect="{{ url_for('chat_sse') }}" hx-target="#chat" hx-swap="innerHTML">
         {% for message in messages %}
-            <li>{{message.role}}: {{ message.content }}</li>
+        <li>{{message.role}}: {{ message.content }} | {{time}}</li>
         {% endfor %}
     </ul>
-    <form hx-post="{{ url_for('chat') }}" hx-target="#chat" hx-swap="outerHTML">
+    <form hx-post="{{ url_for('chat') }}" hx-target="#chat" hx-swap="innerHTML">
         <input type="text" id="message" name="message" placeholder="Type a message">
     </form>
-    <div hx-get="{{ url_for('model_response') }}" hx-trigger="getModelResponse from:body" hx-target="#chat" hx-swap="outerHTML"></div>
+    {# <div hx-get="{{ url_for('model_response') }}" hx-trigger="getModelResponse from:body" hx-target="#chat" hx-swap="outerHTML"></div> #}
 
-    <button hx-delete="{{ url_for('chat') }}" hx-target="#chat" hx-swap="outerHTML">Clear</button>
+    <button hx-delete="{{ url_for('chat') }}" hx-target="#chat" hx-swap="innerHTML">Clear</button>
 
 {% endblock %}

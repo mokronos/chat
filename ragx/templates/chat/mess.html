@@ -1,5 +1,3 @@
-<ul id="chat">
-    {% for message in messages %}
-        <li>{{message.role}}: {{ message.content }}</li>
-    {% endfor %}
-</ul>
+{% for message in messages %}
+    <li>{{message.role}}: {{ message.content }} | {{time}}</li>
+{% endfor %}
