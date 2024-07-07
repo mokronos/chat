@@ -4,4 +4,9 @@
     <h1>Home</h1>
     <p>Welcome to the home page!</p>
     <a href="{{ url_for('chat') }}">Chat</a>
+
+    <h2>Recent Messages</h2>
+    {% for message in data %}
+        <p>{{ message }}</p>
+    {% endfor %}
 {% endblock %}

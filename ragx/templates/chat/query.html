@@ -1,0 +1,13 @@
+{% for pair in pairs[:-1] %}
+    <h3>User:</h3>
+    <p>{{ pair.query }}</p>
+    <h3>Assistant:</h3>
+    <p>{{ pair.response }}</p>
+    </div>
+{% endfor %}
+
+<h3>User:</h3>
+<p>{{ pairs[-1].query }}</p>
+<h3>Assistant:</h3>
+<div hx-ext="sse" sse-connect="{{ url_for('chat_sse', chat_hash=chat_hash) }}" sse-swap="message" sse-close="close" hx-swap="beforeend">
+</div>

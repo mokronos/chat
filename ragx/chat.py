@@ -1,8 +1,9 @@
 import flask
-from flask import render_template, make_response
-from flask_sse import sse
+from flask import render_template, make_response, stream_with_context, g
+from flask.wrappers import Response
 import requests
 import time
+from collections import defaultdict
 
 app = flask.Flask(__name__)
 app.config["REDIS_URL"] = "redis://localhost"
@@ -10,7 +11,7 @@ app.config["REDIS_URL"] = "redis://localhost"
 
 @app.route('/')
 def index():
-    return render_template('chat/index.html')
+    return render_template('chat/index.html', data=[f"Hello World {i}" for i in range(20)])
 
 class Chat:
     def __init__(self):
@@ -39,7 +40,7 @@ def chat():
             response.headers['HX-Trigger'] = 'getModelResponse'
             return response
         case _:
-            return render_template('chat/chat.html', messages=messages)
+            return render_template('chat/chat.html', messages=messages, chat_hash=hash(time.time()))
 
 @app.route('/model_response', methods=['GET'])
 def model_response():
@@ -50,16 +51,40 @@ def model_response():
         case _:
             return render_template('chat/chat.html', messages=messages)
 
-@app.route('/chat_sse', methods=['GET'])
-def chat_sse():
-    print("SSE")
-    for _ in range(10):
-        t = time.time()
-        sse.publish({"message": f"Hello at {t}"}, type='greeting')
-        time.sleep(1)
+queries = []
+chats = defaultdict(dict)
 
-    return "done"
+@app.route('/chat_sse/<chat_hash>', methods=['GET'])
+def chat_sse(chat_hash):
 
+    message = f"I am reponding to your query {chats[chat_hash]["history"][-1]}"
+    def generate():
+        full_message = []
+        for l in message:
+            time.sleep(0.02)
+            msg = f"event: message\ndata: {l}\n\n"
+            full_message.append(l)
+            yield msg
+        msg = f"event: close\ndata: <p>closed</p>\n\n"
+        chats[chat_hash]["history"][-1]["response"] = "".join(full_message)
+        chats[chat_hash]["locked"] = False
+        yield msg
+
+    return Response(generate(), mimetype="text/event-stream")
+
+@app.route('/query', methods=['POST'])
+def query():
+    print(chats)
+    q = flask.request.form['query']
+    chat_hash = flask.request.form['chat_hash']
+    if chats[chat_hash].get("locked") is True:
+        return Response("Chat is locked", status=400)
+    chats[chat_hash]["locked"] = True
+    if chats[chat_hash].get("history") is None:
+        chats[chat_hash]["history"] = []
+    chats[chat_hash]["history"].append({"query": q})
+    print(chats[chat_hash]["history"])
+    return render_template('chat/query.html', pairs=chats[chat_hash]["history"], chat_hash=chat_hash)
 
 # def call_model(model: str="llama3:8b") -> str:
 def call_model(model: str="phi3") -> str:

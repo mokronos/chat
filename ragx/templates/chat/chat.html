@@ -5,22 +5,16 @@
     <p>Welcome to the home page!</p>
     <a href="{{ url_for('index') }}">Home</a>
 
-    <h2>Messages</h2>
-    <ul id="chat" hx-ext="sse" sse-connect="{{ url_for('chat_sse') }}" hx-target="#chat" hx-swap="innerHTML">
-        {% for message in messages %}
-        <li>{{message.role}}: {{ message.content }} | {{time}}</li>
-        {% endfor %}
-    </ul>
-    <form hx-post="{{ url_for('chat') }}" hx-target="#chat" hx-swap="innerHTML">
-        <input type="text" id="message" name="message" placeholder="Type a message">
-    </form>
-    {# <div hx-get="{{ url_for('model_response') }}" hx-trigger="getModelResponse from:body" hx-target="#chat" hx-swap="outerHTML"></div> #}
 
-    <button hx-delete="{{ url_for('chat') }}" hx-target="#chat" hx-swap="innerHTML">Clear</button>
-
-    <div hx-ext="sse" sse-connect="{{ url_for('chat_sse') }}" sse-swap="greeting">
-        Hello, world!
+    <h2>Chat</h2>
+    <div id="chat">
     </div>
+
+    <form hx-post="{{ url_for('query') }}" hx-target="#chat" hx-swap="innerHTML" hx-on::after-request="this.reset()">
+        <input type="text" id="query" name="query" placeholder="Type a message">
+        <input type="hidden" name="chat_hash" value="{{ chat_hash }}">
+    </form>
+    {# <button hx-delete="{{ url_for('chat') }}" hx-target="#chat" hx-swap="innerHTML">Clear</button> #}
 
 
 {% endblock %}
