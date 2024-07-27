@@ -1,0 +1,17 @@
+{% extends base_template %}
+{% import 'macros/_macros.html' as macros %}
+
+{% block content %}
+<div class="flex w-full flex-col items-center">
+<div class="m-2 text-2xl">Register</div>
+<form hx-post="" hx-target="this" hx-swap="outerHTML" hx-select="form"
+    novalidate
+    class="flex w-full flex-col items-center">
+{{ macros.csrf(form) }}
+{{ macros.render_field(form, "username", autocomplete="username") }}
+{{ macros.render_field(form, "password", autocomplete="new-password") }}
+{{ macros.render_field(form, "password2", autocomplete="new-password") }}
+    <button class="button mt-4 sm:mt-6">Register</button>
+</form>
+</div>
+{% endblock %}

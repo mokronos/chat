@@ -1,0 +1,51 @@
+{% extends base_template %}
+{% block content %}
+{# <div class="flex w-full flex-col items-center"> #}
+{#     <div class="m-2 text-2xl">Connect</div> #}
+{#     <form hx-post="" hx-target="#main" hx-swap="innerHTML" hx-push-url="true" #}
+{#         class="flex w-1/2 flex-col items-center"> #}
+{#         {{ form.csrf_token }} #}
+{#         {% if form.csrf_token.errors %} #}
+{#         <div class="mb-4 w-1/2"> #}
+{#             <ul class="input-error"> #}
+{#                 {% for error in form.csrf_token.errors %} #}
+{#                 <li>{{ error }}</li> #}
+{#                 {% endfor %} #}
+{#             </ul> #}
+{#         </div> #}
+{#         {% endif %} #}
+{#         <div class="mb-4 w-full"> #}
+{#             {{ form.argument.label(class="block text-sm") }} #}
+{#             {{ form.argument(class="input block w-full p-2.5") }} #}
+{#             <ul class="input-error"> #}
+{#                 {% for error in form.argument.errors %} #}
+{#                 <li>{{ error }}</li> #}
+{#                 {% endfor %} #}
+{#             </ul> #}
+{#         </div> #}
+{#         <div class="mb-4 w-full"> #}
+{#             {{ form.category.label(class="block text-sm") }} #}
+{#             {{ form.category(class="input block w-full p-2.5", #}
+{#             **{'hx-get': url_for('your_endpoint'), 'hx-target': '#decide', #}
+{#             'hx-swap': 'innerHTML', 'hx-trigger': 'change'})) }} #}
+{#             <ul class="input-error"> #}
+{#                 {% for error in form.category.errors %} #}
+{#                 <li>{{ error }}</li> #}
+{#                 {% endfor %} #}
+{#             </ul> #}
+{#         </div> #}
+{#         <div id="decide" class="mb-4 w-full"> #}
+{#             {{ form.connection.label(class="block text-sm") }} #}
+{#             {{ form.connection(class="input block w-full p-2.5") }} #}
+{#             <ul class="input-error"> #}
+{#                 {% for error in form.connection.errors %} #}
+{#                 <li>{{ error }}</li> #}
+{#                 {% endfor %} #}
+{#             </ul> #}
+{#         </div> #}
+{#         <button class="button mt-4 sm:mt-6" #}
+{#             type="submit">Save #}
+{#         </button> #}
+{#     </form> #}
+{# </div> #}
+{% endblock %}

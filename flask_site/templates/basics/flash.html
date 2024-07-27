@@ -1,0 +1,8 @@
+<div hx-get="{{ url_for('argue.status') }}" hx-swap="outerHTML" hx-target="this" hx-trigger="status-changed from:body"
+    class="wrap w-1/3 shrink animate-fade-out text-sm text-c3">
+    {% for message in get_flashed_messages() %}
+    <p>
+    {{ message }} 
+    </p>
+    {% endfor %}
+</div>

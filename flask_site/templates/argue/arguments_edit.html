@@ -1,0 +1,21 @@
+{% extends base_template %}
+{% import 'macros/_macros.html' as macros %}
+
+{% block content %}
+<div class="flex w-full flex-col items-center">
+    <h1 class="my-4 text-2xl font-bold">Edit Argument</h1>
+    <form hx-put="{{ url_for('argue.arguments_edit', id=id) }}"
+        hx-target="#main" hx-swap="innerHTML" hx-push-url="true"
+        class="flex w-full flex-col items-center">
+        {{ macros.csrf(form) }}
+        {{ macros.render_field(form, "title") }}
+        {{ macros.render_field(form, "content") }}
+        <button class="button mt-4 sm:mt-6">Save</button>
+        <button hx-get="{{ url_for('argue.arguments_details', id=id) }}"
+            hx-target="#main" hx-swap="innerHTML" hx-push-url="true"
+            class="button mt-4 sm:mt-6">
+            Cancel
+        </button>
+    </form>
+</div>
+{% endblock %}

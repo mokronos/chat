@@ -1,0 +1,19 @@
+<div hx-get="{{ url_for('auth.status') }}" hx-swap="outerHTML" hx-target="this" hx-trigger="auth-status-changed from:body"
+    class="flex flex-row items-center">
+    {% if g.user %}
+    <span class="m-2">Logged in as {{ g.user.username }} | id: {{ g.user.id }}</span>
+    <button  hx-post="{{ url_for('auth.logout') }}" hx-headers='{"X-CSRFToken": "{{ csrf_token() }}"}'
+        class="m-2 hover:cursor-pointer hover:text-c3">
+        Log out
+    </button>
+    {% else %}
+    <a hx-get="{{ url_for('auth.login') }}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true"
+        class="m-2 hover:cursor-pointer hover:text-c3">
+        Log in
+    </a>
+    <a hx-get="{{ url_for('auth.register') }}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true"
+        class="m-2 hover:cursor-pointer hover:text-c3">
+        Register
+    </a>
+    {% endif %}
+</div>

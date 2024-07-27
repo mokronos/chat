@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/htmx_utils.js') }}"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='diamond.gif') }}" type="image/gif">
+</head>
+{# hx-history is probably the wrong solution here #}
+{# disables history store, so that back button always re-requests the resource #}
+{# necessary when editing something an item and then going back to the list #}
+{# and any other type of updated status #}
+<body hx-history="false" hx-indicator="#ind">
+    <div class="hidden" id="htmx-location-source"></div>
+    {% include 'basics/loading.html' %}
+    <div class="flex h-screen w-screen flex-col text-white">
+
+        <nav class="flex h-10 flex-none flex-row items-center justify-between bg-c2">
+            {% include 'basics/nav.html' %}
+        </nav>
+
+        <div class="flex flex-1 flex-row overflow-y-auto">
+
+            <div class="w-22 flex h-full flex-none flex-col items-start justify-start overflow-y-scroll border-r border-c2 bg-c1">
+                {% include 'basics/actions.html' %}
+            </div>
+
+            <div id="main" class="flex-auto overflow-x-hidden overflow-y-scroll bg-c1">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <div class="flex h-10 flex-none flex-row items-center justify-end bg-c2">
+            {% include 'basics/footer.html' %}
+        </div>
+    </div>
+</body>
+</html>

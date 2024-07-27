@@ -1,0 +1,34 @@
+{% extends base_template %}
+{% block content %}
+
+<div class="flex flex-col items-center" >
+    {% for argument in arguments %}
+    <div class="arg flex w-full flex-auto flex-col">
+        <div class="flex h-20 flex-none flex-row">
+            {% for conc in arguments_conclusions[argument.id] %}
+            <div class="flex-auto border-4 border-yellow-400 bg-red-700">
+                Conclusion: {{ conc.title }} | {{ conc.content }}
+            </div>
+    {% endfor %}
+        </div>
+        <div class="flex h-20 flex-none flex-row justify-between">
+            <div> {{ argument.title }} | {{ argument.content }} | by {{ argument.username }}
+            </div>
+            <script></script>
+            <button class="m-2 rounded-lg bg-c2 px-5 py-1 text-center text-sm font-medium hover:bg-c3"
+                hx-get="{{url_for('argue.share', id=argument.id)}}" hx-target="previous script" hx-swap="outerHTML">
+                Copy to clipboard
+            </button>
+        </div>
+        <div class="flex h-20 flex-none flex-row overflow-auto">
+            {% for prem in arguments_premises[argument.id] %}
+            <div class="flex-auto truncate border-4 border-yellow-400 bg-red-700">
+                Premise: {{ prem.title }} | {{ prem.content }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <hr class="w-full border-8 border-cyan-500 last:border-0">
+    {% endfor %}
+</div>
+{% endblock %}

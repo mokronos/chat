@@ -1,0 +1,6 @@
+flask
+flask-session
+flask-htmx
+python-dotenv
+WTForms
+Flask-WTF

@@ -1,0 +1,34 @@
+{% extends base_template %}
+{% block content %}
+<div class="flex w-full flex-col items-center">
+<div class="m-2 text-2xl">Details of {{ category }}</div>
+<div class="mb-4 w-1/2">
+    <label class="block text-sm">Title</label>
+    <p class="text-box block w-full">{{ item.title }}</p>
+</div>
+<div class="mb-4 w-1/2">
+    <label class="block text-sm">Content</label>
+    <p class="text-box block w-full">{{ item.content }}</p>
+</div>
+{% if item.user_id == g.user.id %}
+{% if category == 'argument' %}
+<button hx-target="#main" hx-swap="innerHTML" hx-get="{{ url_for('argue.arguments_edit', id=item.id) }}" hx-push-url="true"
+        class="button mt-4 sm:mt-6">
+        Edit
+</button>
+{% endif %}
+{% if category == 'premise' %}
+<button hx-target="#main" hx-swap="innerHTML" hx-get="{{ url_for('argue.premises_edit', id=item.id) }}" hx-push-url="true"
+        class="button mt-4 sm:mt-6">
+        Edit
+</button>
+{% endif %}
+{% if category == 'conclusion' %}
+<button hx-target="#main" hx-swap="innerHTML" hx-get="{{ url_for('argue.conclusions_edit', id=item.id) }}" hx-push-url="true"
+        class="button mt-4 sm:mt-6">
+        Edit
+</button>
+{% endif %}
+{% endif %}
+</div>
+{% endblock %}

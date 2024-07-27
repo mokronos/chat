@@ -1,0 +1,36 @@
+{% extends base_template %}
+{% import 'macros/_macros.html' as macros %}
+
+{% block content %}
+<div class="flex flex-col items-center">
+
+    <h1 class="m-4 flex-none text-2xl">List of all Items</h1>
+    <div class="mb-8 flex w-full flex-row items-center justify-center">
+    <input hx-get="{{ url_for('argue.search') }}" hx-target="#search-results"
+           hx-swap="innerHTML" hx-select="#search-results"
+           hx-trigger="keyup changed delay:500ms, search"
+           hx-include="[name='own']"
+           hx-push-url="true"
+           type="search" name="q" placeholder="Search..." autofocus autocomplete="off"
+           class="input h-10 w-1/2 flex-none text-center">
+    {% if g.user %}
+    <div class="flex flex-col items-center">
+    <label for="own" class="ml-8 flex-auto text-sm">Only show your objects</label>
+    <input hx-get="{{ url_for('argue.search') }}" hx-target="#search-results"
+           hx-swap="innerHTML" hx-select="#search-results"
+           hx-trigger="change" hx-include="[name='q']"
+           hx-push-url="true"
+           type="checkbox" name="own" id="own" hx-params="*"
+           class="input ml-8 h-8 w-8 flex-none accent-c3 hover:cursor-pointer">
+    </div>
+    {% endif %}
+    </div>
+    <div id="search-results" class="w-full flex-auto items-center">
+        {% for item  in items %}
+        {{ macros.render_item(item) }}
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends base_template %}
+{% import 'macros/_macros.html' as macros %}
+
+{% block content %}
+<div class="flex w-full flex-col items-center">
+<h1 class="my-4 text-2xl font-bold">Create New Premise</h1>
+    <form hx-post="{{ url_for('argue.premises_create') }}" hx-swap="innerHTML" hx-target="#main"
+        novalidate 
+        class="flex w-full flex-col items-center">
+        {{ macros.csrf(form) }}
+        {{ macros.render_field(form, "title") }}
+        {{ macros.render_field(form, "content") }}
+        {{ macros.render_field(form, "argument") }}
+    <button class="button mt-4 sm:mt-6">Create</button>
+</form>
+</div>
+{% endblock %}

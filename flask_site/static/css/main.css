@@ -1,0 +1,38 @@
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* makes background of input fields like non-white when autofilled by browser */
+/* can't change it directly, using box shadow inwards */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    box-shadow: 0 0 0 30px #2A2B2A inset;
+    -webkit-text-fill-color: #fff;
+}
+
+#ind{
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+    background-size: 200% 100%;
+}
+
+.htmx-request #ind{
+    opacity: 1;
+}
+.htmx-request#ind{
+    opacity: 1;
+}

@@ -1,0 +1,18 @@
+<div class="">
+    <a hx-get="{{ url_for('argue.about') }}" hx-target="#main"
+        hx-swap="innerHTML" hx-push-url="true"
+        class="m-2 hover:cursor-pointer hover:text-c3">
+        About
+    </a>
+    <a hx-get="{{ url_for('argue.overview') }}" hx-target="#main"
+        hx-swap="innerHTML" hx-push-url="true"
+        class="m-2 hover:cursor-pointer hover:text-c3">
+        Overview
+    </a>
+    <a hx-get="{{ url_for('argue.search') }}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true"
+        class="m-2 hover:cursor-pointer hover:text-c3">
+        Search
+    </a>
+</div>
+{% include 'basics/flash.html' %}
+{% include 'basics/auth_bar.html' %}

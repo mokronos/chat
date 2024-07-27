@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .input {
+        @apply text-sm shadow-md shadow-c3 rounded-lg border border-c3 bg-c2;
+    }
+    .input-error {
+        @apply text-sm text-red-500 mt-2;
+    }
+    .button {
+        @apply rounded-lg bg-c2 px-5 py-2.5 font-medium flex items-center justify-center
+        hover:bg-c3 hover:text-c2;
+    }
+    .text-box {
+        @apply rounded border border-c2 p-2.5;
+    }
+}

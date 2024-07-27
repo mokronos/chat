@@ -42,6 +42,7 @@ def chat():
         case _:
             return render_template('chat/chat.html', messages=messages, chat_hash=hash(time.time()))
 
+
 @app.route('/model_response', methods=['GET'])
 def model_response():
     match flask.request.method:
